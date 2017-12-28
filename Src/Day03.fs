@@ -1,7 +1,5 @@
 module Day03
 
-open System.Numerics
-
 let manhattanDistance (input : int) =
   match input with
     | 1 -> 0
@@ -16,18 +14,6 @@ let manhattanDistance (input : int) =
       )
 
 let part2 (input : int) =
-  let steps =
-    [|
-      (0, 1)
-      (0, -1)
-      (1, 0)
-      (1, 1)
-      (1, -1)
-      (-1, 0)
-      (-1, 1)
-      (-1, -1)
-    |]
-
   let next (x, y) =
     match (x, y) with
       | (x, y) when y > -x && x > y -> (x, y + 1)
@@ -42,8 +28,8 @@ let part2 (input : int) =
         let (nextX, nextY) =
           next(x, y)
         let nextValue =
-          steps
-          |> Array.sumBy (fun (xx, yy) ->
+          Seq.allPairs [| 1; 0; -1 |]  [| 1; 0; -1 |]
+          |> Seq.sumBy (fun (xx, yy) ->
             match spiral.TryFind((xx + nextX, yy + nextY)) with
               | Some(value) -> value
               | None -> 0
