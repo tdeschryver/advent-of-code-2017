@@ -1,6 +1,7 @@
 module Tests.Day06
 
 open Xunit
+open FsUnit.Xunit
 open Day06
 
 let sampleInput =
@@ -38,12 +39,15 @@ module Part1 =
   [<Fact>]
   let ``Sample`` () =
     let (cycles, _) = redistrubate sampleInput
-    Assert.Equal(5, cycles)
+    cycles
+    |> should equal 5
+
 
   [<Fact>]
   let ``Answer`` () =
     let (cycles, _) = redistrubate input
-    Assert.Equal(12841, cycles)
+    cycles
+    |> should equal 12841
 
 module Part2 =
   (*
@@ -59,9 +63,11 @@ module Part2 =
   [<Fact>]
   let ``Sample`` () =
     let (_, cycles) = redistrubate sampleInput
-    Assert.Equal(4, cycles)
+    cycles
+    |> should equal 4
 
   [<Fact>]
   let ``Answer`` () =
     let (_, cycles) = redistrubate input
-    Assert.Equal(8038, cycles)
+    cycles
+    |> should equal 8038

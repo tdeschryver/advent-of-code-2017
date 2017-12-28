@@ -1,6 +1,7 @@
 module Tests.Day04
 
 open Xunit
+open FsUnit.Xunit
 open Day04
 
 let input =
@@ -25,14 +26,16 @@ module Part1 =
 
   [<Fact>]
   let ``Sample`` () =
-    Assert.Equal(2, countValidPassphrasesPart1 "
+    countValidPassphrasesPart1 "
     aa bb cc dd ee
     aa bb cc dd aa
-    aa bb cc dd aaa")
+    aa bb cc dd aaa"
+    |> should equal 2
 
   [<Fact>]
   let ``Answer`` () =
-    Assert.Equal(466, countValidPassphrasesPart1 input)
+    countValidPassphrasesPart1 input
+    |> should equal 466
 
 module Part2 =
   (*
@@ -53,13 +56,15 @@ module Part2 =
 
   [<Fact>]
   let ``Sample`` () =
-    Assert.Equal(3, countValidPassphrasesPart2 "
+    countValidPassphrasesPart2 "
     abcde fghij
     abcde xyz ecdab
     a ab abc abd abf abj
     iiii oiii ooii oooi oooo
-    oiii ioii iioi iiio")
+    oiii ioii iioi iiio"
+    |> should equal 3
 
   [<Fact>]
   let ``Answer`` () =
-    Assert.Equal(251, countValidPassphrasesPart2 input)
+    countValidPassphrasesPart2 input
+    |> should equal 251

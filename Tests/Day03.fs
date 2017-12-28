@@ -1,6 +1,7 @@
 module Tests.Day03
 
 open Xunit
+open FsUnit.Xunit
 open Day03
 
 module Part1 =
@@ -35,9 +36,10 @@ module Part1 =
   [<InlineData(23, 2)>]
   [<InlineData(1024, 31)>]
   [<InlineData(1024, 31)>]
-  [<InlineData(325489, 552)>]
+  [<InlineData(325489, 552)>] // input
   let ``Answer`` (input, expected) =
-    Assert.Equal(expected, manhattanDistance input)
+    manhattanDistance input
+    |> should equal expected
 
 module Part2 =
   (*
@@ -65,5 +67,6 @@ module Part2 =
 
   [<Fact>]
   let ``Answer`` () =
-    Assert.Equal(330785, part2 325489)
+    part2 325489
+    |> should equal 330785
     // Or use https://oeis.org/ - The On-Line Encyclopedia of Integer Sequences

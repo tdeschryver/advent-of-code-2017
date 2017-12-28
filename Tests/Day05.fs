@@ -1,6 +1,7 @@
 module Tests.Day05
 
 open Xunit
+open FsUnit.Xunit
 open Day05
 
 let sampleInput =
@@ -49,11 +50,13 @@ module Part1 =
 
   [<Fact>]
   let ``Sample`` () =
-    Assert.Equal(5, countStepsPart1 sampleInput)
+    countStepsPart1 sampleInput
+    |> should equal 5
 
   [<Fact>]
   let ``Answer`` () =
-    Assert.Equal(318883, countStepsPart1 input)
+    countStepsPart1 input
+    |> should equal 318883
 
 module Part2 =
   (*
@@ -68,8 +71,10 @@ module Part2 =
 
   [<Fact>]
   let ``Sample`` () =
-    Assert.Equal(10, countStepsPart2 sampleInput)
+    countStepsPart2 sampleInput
+    |> should equal 10
 
   [<Fact>]
   let ``Answer`` () =
-    Assert.Equal(23948711, countStepsPart2 input)
+    countStepsPart2 input
+    |> should equal 23948711

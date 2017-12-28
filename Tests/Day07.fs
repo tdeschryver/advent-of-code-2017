@@ -1,6 +1,7 @@
 module Tests.Day07
 
 open Xunit
+open FsUnit.Xunit
 open Day07
 
 let sampleInput =
@@ -76,11 +77,15 @@ module Part1 =
 
   [<Fact>]
   let ``Example part 1`` () =
-    Assert.Equal("tknk", findBottom sampleInput)
+    findBottom sampleInput
+    |> should equal "tknk"
+
 
   [<Fact>]
   let ``Part 1`` () =
-    Assert.Equal("rqwgj", findBottom input)
+    findBottom input
+    |> should equal "rqwgj"
+
 
 module Part2 =
   (*
@@ -105,8 +110,10 @@ module Part2 =
 
   [<Fact>]
   let ``Example part 2`` () =
-    Assert.Equal(60, findWeight sampleInput)
+    findWeight sampleInput
+    |> should equal 60
 
   [<Fact>]
   let ``Part 2`` () =
-    Assert.Equal(333, findWeight input)
+    findWeight input
+    |> should equal 333
