@@ -4,29 +4,25 @@ open System
 
 let private matrixify (input: string) =
   input.Split([|'\n'|], StringSplitOptions.RemoveEmptyEntries)
-    |> Seq.map (fun line ->
-      line.Split([|' '; '\t'|])
-        |> Seq.map(fun c -> c |> int)
-      )
+  |> Seq.map (fun line -> Seq.map int (line.Split([|' '; '\t'|], StringSplitOptions.RemoveEmptyEntries)))
 
 let checksumMinMax input =
   input
-    |> matrixify
-    |> Seq.map (fun line -> (Seq.min(line), Seq.max(line)))
-    |> Seq.sumBy (fun (min, max) -> max - min)
+  |> matrixify
+  |> Seq.map (fun line -> (Seq.min(line), Seq.max(line)))
+  |> Seq.sumBy (fun (min, max) -> max - min)
 
 let checksumDivisible input =
-  let rec divisble (list : List<int>) =
+  let rec divisible (list : seq<int>) =
     let isEvenlyDivisible number elem = number % elem  = 0
-
-    match list with
+    match Seq.toList (Seq.sortDescending list) with
     | [] -> 0
-    | head :: tail ->
-      match tail |> Seq.tryFindBack (isEvenlyDivisible head) with
+    | head::tail ->
+      match Seq.tryFindBack (isEvenlyDivisible head) tail with
       | Some(elem) -> head/elem
-      | _ -> divisble tail
+      | _ -> divisible tail
 
   input
-    |> matrixify
-    |> Seq.map (Seq.distinct >> Seq.sortDescending >> Seq.toList)
-    |> Seq.sumBy divisble
+  |> matrixify
+  |> Seq.map Seq.distinct
+  |> Seq.sumBy divisible

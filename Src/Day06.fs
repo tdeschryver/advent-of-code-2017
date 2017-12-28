@@ -3,7 +3,7 @@ module Day06
 let redistrubate (input: array<int>) =
   let cycle items =
     Seq.initInfinite (fun _ -> items)
-      |> Seq.concat
+    |> Seq.concat
 
   let rec redistrubateMe (banks: array<int>) (history: Map<array<int>, int>) =
     let (maxIndex, maxValue) =
@@ -13,15 +13,14 @@ let redistrubate (input: array<int>) =
 
     let newBanks =
       Seq.initInfinite (id)
-        |> Seq.takeWhile (fun i -> i <= maxIndex + maxValue || i % banks.Length <> 0)
-        |> Seq.map (fun i -> if i > maxIndex && i <= (maxIndex + maxValue) then 1 else 0)
-        |> Seq.chunkBySize banks.Length
-        |> Seq.fold (fun acc chunk ->
-          acc
-          |> Seq.zip chunk
-          |> Seq.map (fun (x, y) -> x + y)
-        ) (banks |> Seq.mapi (fun i p -> if i = maxIndex then 0 else p))
-        |> Seq.toArray
+      |> Seq.takeWhile (fun i -> i <= maxIndex + maxValue || i % banks.Length <> 0)
+      |> Seq.map (fun i -> if i > maxIndex && i <= (maxIndex + maxValue) then 1 else 0)
+      |> Seq.chunkBySize banks.Length
+      |> Seq.fold (fun acc chunk ->
+        Seq.zip chunk acc
+        |> Seq.map (fun (x, y) -> x + y)
+      ) (banks |> Seq.mapi (fun i p -> if i = maxIndex then 0 else p))
+      |> Seq.toArray
 
     if history.ContainsKey newBanks then
       let index = history.[newBanks]

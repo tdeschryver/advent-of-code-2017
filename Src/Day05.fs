@@ -1,8 +1,6 @@
 module Day05
 
-open System
-
-let countSteps (input: string) up =
+let countSteps (lines: string array) up =
   let rec count (maze: array<int>) (index: int) (totalSteps: int) =
     match index < maze.Length with
       | true ->
@@ -12,20 +10,20 @@ let countSteps (input: string) up =
       | false -> totalSteps
 
   let maze =
-    input.Split([|'\n'|], StringSplitOptions.RemoveEmptyEntries)
-      |> Seq.map (fun index -> index |> int)
-      |> Seq.toArray
+    lines
+    |> Seq.map int
+    |> Seq.toArray
 
   count maze 0 0
 
-let countStepsPart1 (input: string) =
-  countSteps input ((+) 1)
+let countStepsPart1 (lines: string array) =
+  countSteps lines ((+) 1)
 
-let countStepsPart2 (input: string) =
-  countSteps input (fun p -> if p >= 3 then p - 1 else p + 1)
+let countStepsPart2 (lines: string array) =
+  countSteps lines (fun p -> if p >= 3 then p - 1 else p + 1)
 
 // this is extremely slow... :)
-let countStepsWithHistory (input: string) =
+let countStepsWithHistory (lines: string array) =
   let rec count (maze: seq<int>) (counter: Map<int, seq<int>>) (index: int) (totalSteps: int) =
     match maze |> Seq.tryItem index with
       | Some(item) ->
@@ -37,7 +35,6 @@ let countStepsWithHistory (input: string) =
       | None -> totalSteps
 
   let init =
-    input.Split([|'\n'|], StringSplitOptions.RemoveEmptyEntries)
-      |> Seq.map (fun line -> line |> int)
+    Seq.map int lines
 
   count init Map.empty 0 0
