@@ -2,14 +2,12 @@ module Day06
 
 let redistrubate (input: array<int>) =
   let cycle items =
-    Seq.initInfinite (fun _ -> items)
-    |> Seq.concat
+    Seq.concat (Seq.initInfinite (fun _ -> items))
 
   let rec redistrubateMe (banks: array<int>) (history: Map<array<int>, int>) =
     let (maxIndex, maxValue) =
-      banks
-        |> Seq.mapi (fun i p -> (i, p))
-        |> Seq.maxBy snd
+      Seq.mapi (fun i p -> (i, p)) banks
+      |> Seq.maxBy snd
 
     let newBanks =
       Seq.initInfinite (id)
@@ -19,7 +17,7 @@ let redistrubate (input: array<int>) =
       |> Seq.fold (fun acc chunk ->
         Seq.zip chunk acc
         |> Seq.map (fun (x, y) -> x + y)
-      ) (banks |> Seq.mapi (fun i p -> if i = maxIndex then 0 else p))
+      ) (Seq.mapi (fun i p -> if i = maxIndex then 0 else p) banks)
       |> Seq.toArray
 
     if history.ContainsKey newBanks then

@@ -58,7 +58,7 @@ let findWeight (lines: string array) =
   let parsedInput =
     lines
     |> Seq.map (fun line ->
-      let parts = line.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
+      let parts = line.Split([| ' ' |], StringSplitOptions.RemoveEmptyEntries)
 
       let key = parts.[0]
       let weight = abs (Int32.Parse(parts.[1], Globalization.NumberStyles.AllowParentheses))
