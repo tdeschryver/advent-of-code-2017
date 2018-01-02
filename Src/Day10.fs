@@ -31,11 +31,13 @@ let solvePart1 (elements: int list) (sequence: int list) =
    knotHash elements sequence 0 0
   x*y
 
-let asHexadecimal (input: string) =
+let sparseHash (input: string) =
   let asci =
     List.ofSeq (Seq.map int input) @ [17; 31; 73; 47; 23;]
 
   knotHash [0..255] (List.collect (id) (List.replicate 64 asci)) 0 0
   |> List.chunkBySize 16
   |> List.map (List.fold (^^^) 0)
-  |> List.fold (fun hex p -> hex + sprintf "%02x" p) ""
+
+let asHexadecimal (input: string) =
+  List.fold (fun hex p -> hex + sprintf "%02x" p) "" (sparseHash input)
