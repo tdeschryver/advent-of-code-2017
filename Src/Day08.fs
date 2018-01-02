@@ -1,14 +1,12 @@
 module Day08
 
 type Instruction =
-  {
-    Register: string;
-    Command: string;
-    Operand: int;
-    CompareRegister: string;
-    Comparison: string;
-    Amount: int;
-  }
+  { Register: string
+    Command: string
+    Operand: int
+    CompareRegister: string
+    Comparison: string
+    Amount: int }
 
 let valueOrDefault defaultValue = function
   | Some v -> v
